@@ -6,7 +6,7 @@ const app = express();
 app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({extended: true}));
 
-var item = "";
+var items = [];
 
 app.get("/", function (req, res) {
   var today = new Date();
@@ -18,12 +18,13 @@ app.get("/", function (req, res) {
   };
   var day = today.toLocaleDateString("en-US", options);
 
-  res.render("list", { kindOfDay: day, newListItem: item });
+  res.render("list", { kindOfDay: day, newListItems: items });
 });
 
 // if we render inside post, we will get error bc newListItem will be undefined during the first get method so we do it with the kindOfDay
 app.post("/", function(req, res) {
-  item = req.body.newItem;
+  var item = req.body.newItem;
+  items.push(item);
   res.redirect("/");
 })
 

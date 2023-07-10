@@ -3,13 +3,13 @@
     <head>
         <meta charset="utf-8">
         <title>To Do List</title>
+        <link rel="stylesheet" href="css/styles.css">
     </head>
     <body>
         <ul>
-            <li>1</li>
-            <li>2</li>
-            <!-- This will replace the 3rd item each time a new item is added-->
-            <li><%= newListItem %></li>
+            <% for(var i=0; i<newListItems.length; i++) { %>
+                <li><%= newListItems[i] %></li>
+            <% } %>   
         </ul>
 
         <form action="/" method="post">
