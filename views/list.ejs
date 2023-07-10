@@ -5,11 +5,17 @@
         <title>To Do List</title>
     </head>
     <body>
-        <% if(kindOfDay === "Saturday" || kindOfDay === "Sunday") { %>
-            <h1 style="color: purple"><%= kindOfDay %> ToDo List</h1>
-        <% } else { %>
-            <h1 style="color: blue"><%= kindOfDay %> ToDo List</h1>
-        <% } %>
+        <ul>
+            <li>1</li>
+            <li>2</li>
+            <!-- This will replace the 3rd item each time a new item is added-->
+            <li><%= newListItem %></li>
+        </ul>
+
+        <form action="/" method="post">
+            <input type="text" name="newItem">
+            <button type="submit" name="button">Add</button>
+        </form>
         
 
     </body>
