@@ -43,9 +43,9 @@ const listSchema = new mongoose.Schema({
 
 const List = mongoose.model("List", listSchema);
 
-app.get("/", function (req, res) {
+let day = date.getDate();
 
-  let day = date.getDate();
+app.get("/", function (req, res) {
 
   Item.find()
     .then((items) => {
@@ -72,7 +72,8 @@ app.get("/", function (req, res) {
 
 // if we render inside post, we will get error bc newListItem will be undefined during the first get method so we do it with the kindOfDay
 app.post("/", function(req, res) {
-  let itemName = req.body.newItem;
+  const itemName = req.body.newItem;
+  const listName = req.body.button;
   // if(req.body.button === "Work") {
   //   workItems.push(item);
   //   res.redirect("/work");
@@ -85,8 +86,22 @@ app.post("/", function(req, res) {
     name: itemName
   });
 
-  item.save();
-  res.redirect("/");
+  if (listName === day) {
+    item.save();
+    res.redirect("/");
+  } else {
+    List.findOne({name: listName})
+      .then((foundList) => {
+        foundList.items.push(item);
+        foundList.save();
+        res.redirect("/" + listName);
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
+  }
+
+  
 
 });
 
